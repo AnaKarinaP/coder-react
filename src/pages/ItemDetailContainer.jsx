@@ -1,33 +1,44 @@
 import { useParams, Link } from "react-router-dom";
 import { productos } from "../data/productos";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
 const ItemDetailContainer = () => {
-  const { id } = useParams();
+  const { itemId } = useParams();
+  const { addToCart } = useContext(CartContext);
 
-  // 👇 CLAVE: convertir id a número
-  const producto = productos.find(
-    (prod) => prod.id === Number(id)
+  const item = productos.find(
+    (p) => String(p.id) === String(itemId)
   );
 
-  if (!producto) {
+  if (!item) {
     return <h2>Producto no encontrado</h2>;
   }
 
+  const handleAdd = () => {
+    console.log("CLICK BOTÓN");
+    addToCart(item);
+  };
+
   return (
-    <div style={{ padding: "20px" }}>
-      <img
-        src={producto.img}
-        alt={producto.nombre}
-        style={{ width: "300px" }}
-      />
+    <div className="item-detail">
+      <img src={item.img} alt={item.nombre} width={200} />
 
-      <h2>{producto.nombre}</h2>
-      <p>{producto.descripcion}</p>
-      <p>Precio: ${producto.precio}</p>
+      <div>
+        <h2>{item.nombre}</h2>
+        <p>{item.descripcion}</p>
+        <p><strong>${item.precio}</strong></p>
 
-      <Link to="/">⬅ Volver</Link>
+        <button onClick={handleAdd}>
+          Agregar al carrito
+        </button>
+
+        <br />
+        <Link to="/">← Volver</Link>
+      </div>
     </div>
   );
 };
 
 export default ItemDetailContainer;
+

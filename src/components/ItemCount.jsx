@@ -1,27 +1,31 @@
-import { useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { productos } from "../data/productos";
+import ItemCount from "./ItemCount";
+import { useContext } from "react";
+import { CartContext } from "../context/CartContext";
 
-const ItemCount = ({ onAdd }) => {
-  const [cantidad, setCantidad] = useState(1);
+const ItemDetailContainer = () => {
+  const { itemId } = useParams();
+  const { addItem } = useContext(CartContext);
 
-  const sumar = () => setCantidad(cantidad + 1);
-  const restar = () => cantidad > 1 && setCantidad(cantidad - 1);
+  const item = productos.find((p) => p.id === itemId);
+
+  if (!item) return <h2>Producto no encontrado</h2>;
 
   return (
-    <div>
-      <button onClick={restar}>-</button>
-      <span style={{ margin: "0 10px" }}>{cantidad}</span>
-      <button onClick={sumar}>+</button>
-
+    <div className="item-detail">
+      <img src={item.img} alt={item.nombre} />
       <div>
-        <button
-          onClick={() => onAdd(cantidad)}
-          style={{ marginTop: "10px" }}
-        >
-          Agregar al carrito
-        </button>
+        <h2>{item.nombre}</h2>
+        <p>{item.descripcion}</p>
+        <strong>${item.precio}</strong>
+
+        <ItemCount onAdd={(cantidad) => addItem(item, cantidad)} />
+
+        <Link to="/">← Volver</Link>
       </div>
     </div>
   );
 };
 
-export default ItemCount;
+export default ItemDetailContainer;

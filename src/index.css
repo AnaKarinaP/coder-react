@@ -1,68 +1,243 @@
+/* =========================
+   RESET + VARIABLES
+========================= */
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --bg: #f9fafb;
+  --card: #ffffff;
+  --primary: #0a0a0a;
+  --secondary: #6b7280;
+  --accent: #111827;
+  --radius-lg: 28px;
+  --radius-md: 18px;
 }
 
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  margin: 0;
+  font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  background-color: var(--bg);
+  color: var(--primary);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 1.2rem 3rem;
   display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  justify-content: space-between;
+  align-items: center;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.navbar h2 {
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
+.navbar div {
+  display: flex;
+  gap: 2rem;
+}
+
+.navbar a {
+  font-size: 0.95rem;
   font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+  color: var(--secondary);
+  position: relative;
 }
 
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
+.navbar a::after {
+  content: "";
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background: var(--primary);
+  transition: width 0.3s;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+/* =========================
+   PRODUCT GRID
+========================= */
+.product-grid {
+  max-width: 1400px;
+  margin: 4rem auto;
+  padding: 0 2.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 3rem;
+}
+
+/* =========================
+   PRODUCT CARD
+========================= */
+.product-card {
+  background: var(--card);
+  border-radius: var(--radius-lg);
+  padding: 1.8rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
+}
+
+.product-card img {
+  width: 100%;
+  height: 280px;
+  object-fit: contain;
+  background: linear-gradient(160deg, #f3f4f6, #e5e7eb);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  margin-bottom: 1.2rem;
+}
+
+.product-card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+
+.product-card p {
+  font-size: 0.95rem;
+  color: var(--secondary);
+  margin-bottom: 1.2rem;
+}
+
+.product-card a {
+  margin-top: auto;
+  background: var(--primary);
+  color: white;
+  padding: 0.9rem;
+  border-radius: 14px;
+  text-align: center;
+  font-weight: 500;
+  transition: transform 0.3s, background 0.3s;
+}
+
+.product-card a:hover {
+  background: var(--accent);
+  transform: scale(1.04);
+}
+
+/* =========================
+   ITEM DETAIL
+========================= */
+.item-detail {
+  max-width: 1200px;
+  margin: 5rem auto;
+  background: var(--card);
+  border-radius: 36px;
+  padding: 4rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.15);
+}
+
+.item-detail img {
+  width: 100%;
+  background: linear-gradient(160deg, #f3f4f6, #e5e7eb);
+  padding: 3rem;
+  border-radius: 32px;
+  object-fit: contain;
+}
+
+.item-detail h2 {
+  font-size: 2.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.item-detail p {
+  font-size: 1.05rem;
+  color: var(--secondary);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.item-detail strong {
+  font-size: 2.2rem;
+  display: block;
+  margin-bottom: 2rem;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+button {
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  padding: 1rem 2rem;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+/* =========================
+   CART
+========================= */
+.cart {
+  max-width: 900px;
+  margin: 5rem auto;
+  background: var(--card);
+  border-radius: 36px;
+  padding: 4rem;
+  box-shadow: 0 50px 100px rgba(0, 0, 0, 0.15);
+}
+
+.cart h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.cart p {
+  font-size: 1.05rem;
+  color: var(--secondary);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 900px) {
+  .item-detail {
+    grid-template-columns: 1fr;
+    padding: 2.5rem;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+
+  .navbar {
+    padding: 1rem 1.5rem;
   }
 }

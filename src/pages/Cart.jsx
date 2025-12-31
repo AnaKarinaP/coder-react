@@ -1,33 +1,60 @@
 import { useContext } from "react";
 import { CartContext } from "../context/CartContext";
+import { Link } from "react-router-dom";
 
 const Cart = () => {
-  const { cart, removeFromCart, clearCart } = useContext(CartContext);
+  const { cart, removeItem, clearCart } =
+    useContext(CartContext);
 
   if (cart.length === 0) {
-    return <h2>El carrito está vacío</h2>;
+    return (
+      <div className="cart">
+        <h2>Carrito vacío</h2>
+        <Link to="/">Volver a la tienda</Link>
+      </div>
+    );
   }
 
   return (
-    <div style={{ padding: "20px" }}>
+    <div className="cart">
       <h2>Carrito</h2>
 
       {cart.map((item) => (
         <div
           key={item.id}
-          style={{ borderBottom: "1px solid #ccc", marginBottom: "10px" }}
+          style={{
+            display: "flex",
+            gap: "20px",
+            marginBottom: "20px",
+            alignItems: "center",
+          }}
         >
-          <h4>{item.nombre}</h4>
-          <p>Cantidad: {item.cantidad}</p>
-          <p>Precio: ${item.precio}</p>
+          <img
+            src={item.img}
+            alt={item.nombre}
+            width={80}
+          />
 
-          <button onClick={() => removeFromCart(item.id)}>
-            Eliminar
-          </button>
+          <div>
+            <h4>{item.nombre}</h4>
+            <p>${item.precio}</p>
+
+            <button
+              onClick={() =>
+                removeItem(item.id)
+              }
+            >
+              Eliminar
+            </button>
+          </div>
         </div>
       ))}
 
-      <button onClick={clearCart}>Vaciar carrito</button>
+      <hr />
+
+      <button onClick={clearCart}>
+        Vaciar carrito
+      </button>
     </div>
   );
 };
